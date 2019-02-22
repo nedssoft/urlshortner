@@ -4,90 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-with, initial-scale=1.0"></meta>
   <title>URL shortner</title>
-  <!-- <link rel="stylesheet" type="text/css" href="./style.css" /> -->
+  <link rel="stylesheet" type="text/css" href="style.css" />
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-  <style >
-    main {
-  background-color: #0087de;
-  height: 900px;
-  text-align: center;
-}
-
-h1 {
-  height: 38px;
-  font-family: Roboto;
-  font-size: 32px;
-  font-weight: 300;
-  letter-spacing: 0.6px;
-  text-align: center;
-  color: #1f233e;
-  padding-top: 137px;
-}
-
-.logo {
-  width: 110px;
-  height: 28px;
-  margin-top: 40px;
-  object-fit: contain;
-}
-
-.container {
-  width: 400px;
-  margin: auto;
-  text-align: center;
-}
-
-
-#input {
-  width: 219px;
-  height: 37px;
-  border-radius: 3.2px;
-  border: solid 0.8px #1f233e;
-  background-color: inherit;
-  display: block;
-  margin: auto;
-}
-
-#shorten {
-  width: 91px;
-  height: 37px;
-  border-radius: 3.2px;
-  border: solid 0.8px #1f233e;
-  background-color: inherit;
-  margin-top: 48px;
-  font-family: Source Sans Pro;
-  font-size: 14px;
-  letter-spacing: 0.2px;
-  text-align: center;
-  color: #ffffff;
-  margin-right: -3px;
-}
-
-#expand {
-  width: 91px;
-  height: 37px;
-  border-radius: 3.2px;
-  background-color: #1f233e;
-  border: solid 0.8px #4a4a4a;
-  margin-top: 48px;
-  font-family: Source Sans Pro;
-  font-size: 14px;
-  letter-spacing: 0.2px;
-  text-align: center;
-  color: #ffffff;
-  margin-left: -3px;
-}
-
-#responseField {
-  width: 191px;
-  height: 120px;
-  border: solid 2px #ffffff;
-  margin: auto;
-  margin-top: 25px;
-}
-
-  </style>
 </head>
 
 <body>
@@ -96,82 +15,20 @@ h1 {
 
       <h1>Enter a URL</h1>
 
-      <form id="form" autocomplete="off">
-        <input type="text" id="input" value="">
-        <button id="shorten">Shorten</button>
+     <div class="form-container">
+        <form id="form" autocomplete="off">
+          <input type="text" id="input">
+          <button id="shorten">Shorten</button>
         <button id="expand">Expand</button>
       </form>
+     </div>
 
-      <div id="responseField">
+      <div id="result">
 
       </div>
 
     </div>
   </main>
-  <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
-  <script >
-    const apiKey = 'AIzaSyCqGkpKKwsVry7GWx8Opw2u9meUmvGwQwg';
-const url = 'https://www.googleapis.com/urlshortener/v1/url';
-
-// Some page elements
-const $inputField = $('#input');
-const $expandButton = $('#expand');
-const $shortenButton = $('#shorten');
-const $responseField = $('#responseField');
-
-// AJAX functions
-
-async function expandUrl() {
-  const urlToExpand = url + '?shortUrl=' + $inputField.val() + '&key=' + apiKey;
-  try {
-    let response = await fetch(urlToExpand);
-    if (response.ok) {
-      let jsonResponse = await response.json();
-      $responseField.append('<p> Your expanded URL is </p><p>' + jsonResponse.longUrl+ '</p>');
-      return jsonResponse;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function shortenUrl() {
-  const urlToShorten = $inputField.val();
-  const urlWithKey = url + '?key=' + apiKey;
-  try {
-    let response = await fetch(urlWithKey, {
-      method: 'POST',
-      body: JSON.stringify({longUrl: urlToShorten}),
-      headers: {
-        "Content-type": "application/json"
-      }
-    });
-    if (response.ok) {
-      let jsonResponse = await response.json();
-      $responseField.append('<p> Your shortened URL is </p><p>' + jsonResponse.id + '</p>');
-      return jsonResponse;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
-// Clear page and call AJAX functions
-function expand() {
-  $responseField.empty();
-  expandUrl();
-  return false;
-};
-
-function shorten() {
-  $responseField.empty();
-  shortenUrl();
-  return false;
-};
-
-$expandButton.click(expand);
-$shortenButton.click(shorten);
-  </script>
+<script src="index.js"></script>
 </body>
 </html>
